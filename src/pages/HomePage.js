@@ -33,7 +33,7 @@ const HomePage = () => {
   };
   const handleDelete = async () => {
     try {
-      await apiService.delete(`/cars/${selectedCar._id}`);
+      await apiService.delete(`/car/${selectedCar._id}`);
       getData();
     } catch (err) {
       console.log(err);
@@ -75,7 +75,7 @@ const HomePage = () => {
       ),
     },
   ];
-  const rows = cars.map((car) => ({
+  const rows = cars && cars.map((car) => ({
     id: car._id,
     name: car.make + " " + car.model,
     size: car.size,
@@ -88,9 +88,10 @@ const HomePage = () => {
   const getData =
     useCallback(
       async () => {
-    const res = await apiService.get(`/cars?page=${page}`);
-    setCars(res.data.cars);
-    setTotalPages(res.data.total);
+        const res = await apiService.get(`/car?page=${page}`);
+
+        setCars(res.cars);
+        setTotalPages(res.total);
       }
       , [page]);
 
